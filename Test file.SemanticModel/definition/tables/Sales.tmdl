@@ -1,10 +1,6 @@
 table Sales
 	lineageTag: b0bd5848-5ca5-40ce-aafd-190d75b83af5
 
-	measure Qty = DISTINCTCOUNT(Sales[Region])
-		formatString: 0
-		lineageTag: 2585196e-cc95-42f4-8816-492e81f3a7ed
-
 	column 'Tran Id'
 		dataType: string
 		lineageTag: 2af32271-eb5d-42e0-bb0a-3f24eb3eea8b
