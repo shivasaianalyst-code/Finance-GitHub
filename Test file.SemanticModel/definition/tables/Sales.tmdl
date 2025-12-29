@@ -1,6 +1,10 @@
 table Sales
 	lineageTag: b0bd5848-5ca5-40ce-aafd-190d75b83af5
 
+	measure Measure = DISTINCTCOUNT(Sales[Product ID])
+		formatString: 0
+		lineageTag: 9611fb22-b101-47b6-8593-a1b0b63ad22c
+
 	column 'Tran Id'
 		dataType: string
 		lineageTag: 2af32271-eb5d-42e0-bb0a-3f24eb3eea8b
