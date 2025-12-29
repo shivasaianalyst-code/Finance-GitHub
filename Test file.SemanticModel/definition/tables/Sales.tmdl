@@ -1,0 +1,69 @@
+table Sales
+	lineageTag: b0bd5848-5ca5-40ce-aafd-190d75b83af5
+
+	column 'Tran Id'
+		dataType: string
+		lineageTag: 2af32271-eb5d-42e0-bb0a-3f24eb3eea8b
+		summarizeBy: none
+		sourceColumn: Tran Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5780df1b-0b7b-473d-bc0e-f58cae77f7d2
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Region
+		dataType: string
+		lineageTag: 21e2e256-1372-4fcb-80da-0ca72b9982b6
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product ID'
+		dataType: string
+		lineageTag: 39671197-9a2e-42c8-8a0e-295c1727d257
+		summarizeBy: none
+		sourceColumn: Product ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: 0f9b1883-7987-4d44-9bdc-da981c4d0042
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Units
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ddd58b4-1b07-4f2c-8809-bb546c66259d
+		summarizeBy: sum
+		sourceColumn: Units
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales-6249cb97-a122-4623-b432-2dd89e8dffcf = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\OneDrive - Goodly\Online Trainings\Power BI for Users\Sales.xlsx"), null, true),
+				    Sales_Sheet = Source{[Item="Sales",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sales_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Tran Id", type text}, {"Date", type date}, {"Aff Payout Date", type date}, {"Region", type text}, {"Product ID", type text}, {"Channel", type text}, {"Order Type", type text}, {"Affiliate Code", type text}, {"Units", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Aff Payout Date", "Affiliate Code", "Order Type"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
